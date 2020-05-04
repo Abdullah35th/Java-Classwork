@@ -1,0 +1,144 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Abdullah Nazari
+ */
+import java.util.Scanner;
+import java.util.Random;
+
+
+public class RPC {
+    public static int tie = 0;
+    public static int userScore = 0;
+    public static int cpuScore = 0;
+    
+    public static String cpuInput() {
+        Random rand = new Random();
+
+        int cpuTurn = rand.nextInt(3);
+
+        switch (cpuTurn) {
+            case 0: {
+                System.out.println("Rock"); 
+                break;
+            }
+            case 1: {
+                System.out.println("Paper"); 
+                break;
+            }
+            case 2: {
+               System.out.println("Scissors"); 
+                break;
+            }
+                
+        
+
+        }
+    }
+    
+    public static String userInput(int choice) {
+        switch (choice) {
+            case 1: {
+                System.out.println("Rock"); 
+                break;
+            }
+            case 2: {
+                System.out.println("Paper"); 
+                break;
+            }
+            case 3: {
+                System.out.println("Scissors");
+                break;
+            }
+                
+        
+
+        }
+    }
+ public static void scoreKeep(int move, String cpuMove) {
+        String userInput = userInput(move);
+        boolean userWins = userInput.equals("Rock") && cpuMove.equals("Scissors")
+                || userInput.equals("Paper") && cpuMove.equals("Rock")
+                || userInput.equals("Scissors") && cpuMove.equals("Paper");
+
+        if (userWins) {
+            System.out.println("User's " + userInput + " beats cpu's " + cpuMove + " - User Wins!");
+            userScore++;
+        } else if (userInput.equals(cpuMove)) {
+            System.out.println("The Score is Tied");
+            tie++;
+        } else {
+            System.out.println("CPU's " + cpuMove + " beats User's " + userInput + " - CPU Wins");
+            cpuScore++;
+        }
+    }
+ 
+ public static void declareWinner() {
+        if (userScore > cpuScore) {
+            System.out.println("User has won the match");
+        } else if (userScore < cpuScore) {
+            System.out.println("CPU has won the match");
+        } else {
+            System.out.println("User and CPU have tied");
+        }
+
+    }
+ public static void main(String[] args) {
+        Scanner playInput = new Scanner(System.in);
+        Scanner stringInput = new Scanner(System.in);
+        boolean playing = false;
+
+        System.out.println("Rock, Paper, Scissors Game");
+
+        do {
+            userScore = 0;
+            cpuScore = 0;
+            tie = 0;
+
+            System.out.print("How many rounds? Number must be between 1 & 10 ");
+            int rounds = playInput.nextInt();
+            if (rounds > 10 || rounds < 1) {
+                throw new IllegalArgumentException("Enter a valid Number");
+            }
+
+            
+            for (int i = 0; i < rounds; i++) {
+                System.out.println("Round " + (i + 1));
+                System.out.println("1 - Rock");
+                System.out.println("2 - Paper");
+                System.out.println("3 - Scissor");
+
+                System.out.print("User move: ");
+                int play = playInput.nextInt();
+                String cpuPlay = cpuInput();
+                scoreKeep(play, cpuPlay);
+
+                System.out.println("-------");
+            }
+
+            System.out.println("User Wins: " + userScore  + " | Computer Wins: " + cpuScore + " | Ties: " + tie);
+            declareWinner();
+
+            System.out.print("Rematch? (yes/no): ");
+            String playAgain = stringInput.nextLine();
+            if (playAgain.equals("yes")) {
+                System.out.println("");
+                playing = true;
+            } else {
+                System.out.println("Thanks for playing!");
+                playing = false;
+            }
+        } while (playing);
+    }
+ 
+ 
+ 
+ 
+}
+
+
